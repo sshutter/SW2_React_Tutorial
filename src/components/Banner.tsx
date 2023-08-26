@@ -12,8 +12,8 @@ export default function Banner() {
         priority
       />
       <div className={styles.bannerText}>
-        <h1>Your Travel Banner</h1>
-        <h3>Explore Your World with Us</h3>
+        <h1 className="text-4xl font-medium">Your Travel Banner</h1>
+        <h3 className="text-xl font-serif">Explore Your World with Us</h3>
       </div>
     </div>
   );

@@ -1,18 +1,24 @@
 import Image from "next/image";
 import styles from "./ProdectCard.module.css";
 
-export default function ProductCard() {
+export default function ProductCard({
+  cardName,
+  imgSrc,
+}: {
+  cardName: string;
+  imgSrc: string;
+}) {
   return (
-    <div className={styles.card}>
-      <div className={styles.cardimg}>
+    <div className="w-1/5 h-[300px] rounded-lg shadow-lg bg-white">
+      <div className="w-full h-[70%] relative rounded-t-lg">
         <Image
-          src={"/img/car1.jpg"}
+          src={imgSrc}
           alt="Product Image"
           fill={true}
-          objectFit="cover"
+          className="object-cover rounded-t-lg"
         />
       </div>
-      <div className={styles.cardtext}>Car 1</div>
+      <div className="w-full h-[30%] p-[10px] text-black">{cardName}</div>
     </div>
   );
 }

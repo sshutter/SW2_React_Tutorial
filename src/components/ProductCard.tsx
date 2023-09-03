@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./ProdectCard.module.css";
+import InteractiveCard from "./InteractiveCard";
 
 export default function ProductCard({
   cardName,
@@ -8,8 +8,11 @@ export default function ProductCard({
   cardName: string;
   imgSrc: string;
 }) {
+  function onCarSelected() {
+    alert("You selected " + cardName);
+  }
   return (
-    <div className="w-1/5 h-[300px] rounded-lg shadow-lg bg-white">
+    <InteractiveCard contentName={cardName}>
       <div className="w-full h-[70%] relative rounded-t-lg">
         <Image
           src={imgSrc}
@@ -19,6 +22,6 @@ export default function ProductCard({
         />
       </div>
       <div className="w-full h-[30%] p-[10px] text-black">{cardName}</div>
-    </div>
+    </InteractiveCard>
   );
 }

@@ -4,9 +4,11 @@ import InteractiveCard from "./InteractiveCard";
 export default function ProductCard({
   cardName,
   imgSrc,
+  onCompare,
 }: {
   cardName: string;
   imgSrc: string;
+  onCompare: Function;
 }) {
   function onCarSelected() {
     alert("You selected " + cardName);
@@ -21,7 +23,16 @@ export default function ProductCard({
           className="object-cover rounded-t-lg"
         />
       </div>
-      <div className="w-full h-[30%] p-[10px] text-black">{cardName}</div>
+      <div className="w-full h-[15%] p-[10px] text-black">{cardName}</div>
+      <button
+        className="block h-[10%] text-sm rounded-md bg-sky-600 hover:bg-indigo-600 mx-2 p-1 shadow-sm text-white"
+        onClick={(e) => {
+          e.stopPropagation();
+          onCompare(cardName);
+        }}
+      >
+        Compare
+      </button>
     </InteractiveCard>
   );
 }

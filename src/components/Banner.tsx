@@ -1,11 +1,20 @@
+"use client";
 import styles from "./Banner.module.css";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Banner() {
+  const covers = ["/img/cover.jpg", "/img/cover2.jpg", "/img/cover3.jpg"];
+  let [index, setIndex] = useState(0);
   return (
-    <div className={styles.banner}>
+    <div
+      className={styles.banner}
+      onClick={() => {
+        setIndex((index + 1) % covers.length);
+      }}
+    >
       <Image
-        src={"/img/cover.jpg"}
+        src={covers[index]}
         alt="cover"
         fill={true}
         objectFit="cover"

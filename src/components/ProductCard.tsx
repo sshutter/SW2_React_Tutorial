@@ -28,6 +28,7 @@ export default function ProductCard({
         className="block h-[10%] text-sm rounded-md bg-sky-600 hover:bg-indigo-600 mx-2 p-1 shadow-sm text-white"
         onClick={(e) => {
           e.stopPropagation();
+          e.preventDefault();
           onCompare(cardName);
         }}
       >

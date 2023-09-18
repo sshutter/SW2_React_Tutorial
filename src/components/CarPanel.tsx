@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { useReducer } from "react";
 
@@ -24,6 +25,17 @@ export default function CarPanel() {
     compareReducer,
     new Set<string>()
   );
+
+  /**
+   * Mock data for demonstration only
+   */
+  const mockCarRepo = [
+    { cid: "001", name: "Honda Civic", imgSrc: "/img/civic.jpg" },
+    { cid: "002", name: "Honda Accord", imgSrc: "/img/accord.jpg" },
+    { cid: "003", name: "Toyota Fortuner", imgSrc: "/img/fortuner.jpg" },
+    { cid: "004", name: "Tesla Model 3", imgSrc: "/img/tesla.jpg" },
+  ];
+
   return (
     <div>
       <div
@@ -36,35 +48,18 @@ export default function CarPanel() {
           alignContent: "space-around",
         }}
       >
-        <ProductCard
-          cardName="Honda Civic"
-          imgSrc="/img/civic.jpg"
-          onCompare={(car: string) => {
-            dispatchCompare({ actionType: "add", cardName: car });
-          }}
-        />
-        <ProductCard
-          cardName="Honda Accord"
-          imgSrc="/img/accord.jpg"
-          onCompare={(car: string) => {
-            dispatchCompare({ actionType: "add", cardName: car });
-          }}
-        />
-
-        <ProductCard
-          cardName="Toyota Fortuner"
-          imgSrc="/img/fortuner.jpg"
-          onCompare={(car: string) => {
-            dispatchCompare({ actionType: "add", cardName: car });
-          }}
-        />
-        <ProductCard
-          cardName="Tesla Model 3"
-          imgSrc="/img/tesla.jpg"
-          onCompare={(car: string) => {
-            dispatchCompare({ actionType: "add", cardName: car });
-          }}
-        />
+        {mockCarRepo.map((car) => (
+          <Link href={`/car/${car.cid}`} className="w-1/5">
+            <ProductCard
+              key={car.cid}
+              cardName={car.name}
+              imgSrc={car.imgSrc}
+              onCompare={() => {
+                dispatchCompare({ actionType: "add", cardName: car.name });
+              }}
+            />
+          </Link>
+        ))}
       </div>
       <div className="w-full text-xl font-medium text-black">
         Compare List:{compareList.size}

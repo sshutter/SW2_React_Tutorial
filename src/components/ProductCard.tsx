@@ -10,9 +10,6 @@ export default function ProductCard({
   imgSrc: string;
   onCompare: Function;
 }) {
-  function onCarSelected() {
-    alert("You selected " + cardName);
-  }
   return (
     <InteractiveCard contentName={cardName}>
       <div className="w-full h-[70%] relative rounded-t-lg">

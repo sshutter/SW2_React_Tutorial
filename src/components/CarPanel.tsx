@@ -2,9 +2,20 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { useReducer } from "react";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import getCars from "@/libs/getCars";
 
 export default function CarPanel() {
+  const [carResponse, setCarResponse] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const cars = await getCars();
+      setCarResponse(cars);
+    };
+    fetchData();
+  }, []);
+
   const countRef = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -30,15 +41,19 @@ export default function CarPanel() {
     new Set<string>()
   );
 
-  /**
-   * Mock data for demonstration only
-   */
-  const mockCarRepo = [
-    { cid: "001", name: "Honda Civic", imgSrc: "/img/civic.jpg" },
-    { cid: "002", name: "Honda Accord", imgSrc: "/img/accord.jpg" },
-    { cid: "003", name: "Toyota Fortuner", imgSrc: "/img/fortuner.jpg" },
-    { cid: "004", name: "Tesla Model 3", imgSrc: "/img/tesla.jpg" },
-  ];
+  // /**
+  //  * Mock data for demonstration only
+  //  */
+  // const mockCarRepo = [
+  //   { cid: "001", name: "Honda Civic", imgSrc: "/img/civic.jpg" },
+  //   { cid: "002", name: "Honda Accord", imgSrc: "/img/accord.jpg" },
+  //   { cid: "003", name: "Toyota Fortuner", imgSrc: "/img/fortuner.jpg" },
+  //   { cid: "004", name: "Tesla Model 3", imgSrc: "/img/tesla.jpg" },
+  // ];
+
+  if (!carResponse) {
+    return <p className="text-black">Car Panel is loading ...</p>;
+  }
 
   return (
     <div>
@@ -52,12 +67,12 @@ export default function CarPanel() {
           alignContent: "space-around",
         }}
       >
-        {mockCarRepo.map((car) => (
-          <Link href={`/car/${car.cid}`} className="w-1/5">
+        {carResponse.data.map((car: Object) => (
+          <Link href={`/car/${car.id}`} className="w-1/5">
             <ProductCard
-              key={car.cid}
-              cardName={car.name}
-              imgSrc={car.imgSrc}
+              key={car.id}
+              cardName={car.model}
+              imgSrc={car.picture}
               onCompare={() => {
                 dispatchCompare({ actionType: "add", cardName: car.name });
               }}

@@ -1,46 +1,67 @@
 import Image from "next/image";
 import { mock } from "node:test";
+import getCar from "@/libs/getCar";
 
-export default function CarDetailPage({ params }: { params: { cid: string } }) {
-  /**
-   * Mock data for demonstration only
-   */
-  const mockCarRepo = new Map();
-  mockCarRepo.set("001", {
-    cid: "001",
-    name: "Honda Civic",
-    imgSrc: "/img/civic.jpg",
-  });
-  mockCarRepo.set("002", {
-    cid: "002",
-    name: "Honda Accord",
-    imgSrc: "/img/accord.jpg",
-  });
-  mockCarRepo.set("003", {
-    cid: "003",
-    name: "Toyota Fortuner",
-    imgSrc: "/img/fortuner.jpg",
-  });
-  mockCarRepo.set("004", {
-    cid: "004",
-    name: "Tesla Model 3",
-    imgSrc: "/img/tesla.jpg",
-  });
+export default async function CarDetailPage({
+  params,
+}: {
+  params: { cid: string };
+}) {
+  const carDetail = await getCar(params.cid);
+  // /**
+  //  * Mock data for demonstration only
+  //  */
+  // const mockCarRepo = new Map();
+  // mockCarRepo.set("001", {
+  //   cid: "001",
+  //   name: "Honda Civic",
+  //   imgSrc: "/img/civic.jpg",
+  // });
+  // mockCarRepo.set("002", {
+  //   cid: "002",
+  //   name: "Honda Accord",
+  //   imgSrc: "/img/accord.jpg",
+  // });
+  // mockCarRepo.set("003", {
+  //   cid: "003",
+  //   name: "Toyota Fortuner",
+  //   imgSrc: "/img/fortuner.jpg",
+  // });
+  // mockCarRepo.set("004", {
+  //   cid: "004",
+  //   name: "Tesla Model 3",
+  //   imgSrc: "/img/tesla.jpg",
+  // });
 
   return (
     <main className="text-center p-5">
-      <h1 className="text-lg text-black font-medium">Car ID {params.cid}</h1>
+      <h1 className="text-lg text-black font-medium">{carDetail.data.model}</h1>
       <div className="flex flex-row my-5">
         <Image
-          src={mockCarRepo.get(params.cid).imgSrc}
+          src={carDetail.data.picture}
           alt="Car Image"
           width={0}
           height={0}
           sizes="100vw"
           className="rounded-lg w-[30%]"
         />
-        <div className="text-md mx-5 text-black">
-          {mockCarRepo.get(params.cid).name}
+        <div className="text-md mx-5 text-black text-left">
+          {carDetail.data.description}
+          <div className="text-md mx-5 text-black">
+            Doors: {carDetail.data.doors}
+          </div>
+          <div className="text-md mx-5 text-black">
+            Seets: {carDetail.data.seets}
+          </div>
+          <div className="text-md mx-5 text-black">
+            Large Bags: {carDetail.data.largebags}
+          </div>
+          <div className="text-md mx-5 text-black">
+            Small Bags: {carDetail.data.smallbags}
+          </div>
+          <div className="text-md mx-5 text-black">
+            Daily Rental Rate: {carDetail.data.dayRate} (insurance included)
+          </div>
         </div>
       </div>
     </main>

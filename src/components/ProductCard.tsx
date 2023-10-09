@@ -8,7 +8,7 @@ export default function ProductCard({
 }: {
   cardName: string;
   imgSrc: string;
-  onCompare: Function;
+  onCompare?: Function;
 }) {
   return (
     <InteractiveCard contentName={cardName}>
@@ -21,16 +21,20 @@ export default function ProductCard({
         />
       </div>
       <div className="w-full h-[15%] p-[10px] text-black">{cardName}</div>
-      <button
-        className="block h-[10%] text-sm rounded-md bg-sky-600 hover:bg-indigo-600 mx-2 p-1 shadow-sm text-white"
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          onCompare(cardName);
-        }}
-      >
-        Compare
-      </button>
+      {onCompare ? (
+        <button
+          className="block h-[10%] text-sm rounded-md bg-sky-600 hover:bg-indigo-600 mx-2 p-1 shadow-sm text-white"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onCompare(cardName);
+          }}
+        >
+          Compare
+        </button>
+      ) : (
+        ""
+      )}
     </InteractiveCard>
   );
 }

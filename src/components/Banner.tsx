@@ -23,7 +23,7 @@ export default function Banner() {
         src={covers[index]}
         alt="cover"
         fill={true}
-        objectFit="cover"
+        className="object-cover"
         priority
       />
       <div className={styles.bannerText}>

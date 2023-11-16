@@ -4,9 +4,10 @@ import ProductCard from "./ProductCard";
 import { useReducer } from "react";
 import { useRef, useEffect, useState } from "react";
 import getCars from "@/libs/getCars";
+import { CarItem, CarJson } from "interfaces";
 
 export default function CarPanel() {
-  const [carResponse, setCarResponse] = useState(null);
+  const [carResponse, setCarResponse] = useState<CarJson | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,14 +68,14 @@ export default function CarPanel() {
           alignContent: "space-around",
         }}
       >
-        {carResponse.data.map((car: Object) => (
+        {carResponse.data.map((car: CarItem) => (
           <Link href={`/car/${car.id}`} className="w-1/5">
             <ProductCard
               key={car.id}
               cardName={car.model}
               imgSrc={car.picture}
               onCompare={() => {
-                dispatchCompare({ actionType: "add", cardName: car.name });
+                dispatchCompare({ actionType: "add", cardName: car.model });
               }}
             />
           </Link>
